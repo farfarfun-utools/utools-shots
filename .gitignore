@@ -1,0 +1,11 @@
+# 由 setup.mjs 按本机路径生成
+/chromium
+/fonts.conf
+
+# emoji 字体 11MB，不塞进仓库；缺它时 setup.mjs 会提醒怎么补
+/fonts/*.ttf
+/fonts/*.ttc
+/fonts/*.otf
+
+# 本地预览出的图，不是任何仓库的产物
+/preview/
