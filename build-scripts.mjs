@@ -6,7 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const HERE = path.dirname(new URL(import.meta.url).pathname);
+const HERE = import.meta.dirname;
 const WORKSPACE = path.dirname(HERE);
 const APPS = ['funchat', 'fundoc', 'funlink', 'funotp'];
 

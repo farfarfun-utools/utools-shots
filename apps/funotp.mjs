@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { click, reload, shoot, sleep, steps } from '../shared.mjs';
 
-const ROOT = '/home/bingtao/workspace/github/farfarfun-utools/utools-funotp';
+const ROOT = path.resolve(import.meta.dirname, '../../utools-funotp');
 
 const GROUPS = [
   { id: 'g-dev', name: '开发' },

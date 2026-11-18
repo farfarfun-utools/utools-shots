@@ -131,7 +131,7 @@ export async function shoot({ dist, out, width = 800, height = 600, scale = 2, s
     // dist 是 <插件仓库>/utools/dist，往上两级就是仓库目录，拿它的名字做子目录，
     // 四个插件预览时互不覆盖。
     const repo = path.basename(path.resolve(dist, '../..'));
-    out = path.join(path.dirname(new URL(import.meta.url).pathname), 'preview', repo);
+    out = path.join(import.meta.dirname, 'preview', repo);
   }
   const server = await serve(dist);
   const browser = await launch({ headless: true });

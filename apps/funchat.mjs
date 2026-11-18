@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { click, clickContains, clickText, reload, rightClick, scrollToBottom, shoot, sleep, steps } from '../shared.mjs';
 
-const ROOT = '/home/bingtao/workspace/github/farfarfun-utools/utools-funchat';
+const ROOT = path.resolve(import.meta.dirname, '../../utools-funchat');
 
 // 内置好友里的 GPT-5.4（utools/dist/data/agents.json 自带，首次运行会自动入库）。
 const AGENT = 'ai@0000000000002';
