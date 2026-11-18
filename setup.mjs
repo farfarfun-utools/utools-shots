@@ -7,7 +7,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 
-const HERE = path.dirname(new URL(import.meta.url).pathname);
+const HERE = import.meta.dirname;
 
 /**
  * 找一个 Chromium。优先顺序：显式指定 → Playwright 下载的那份 → 系统装的。

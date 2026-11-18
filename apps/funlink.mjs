@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { click, clickText, reload, rightClick, shoot, sleep, steps } from '../shared.mjs';
 
-const ROOT = '/home/bingtao/workspace/github/farfarfun-utools/utools-funlink';
+const ROOT = path.resolve(import.meta.dirname, '../../utools-funlink');
 
 // cat@default 是「收集箱」那个内置视图的分类 id，顶部导航自己会画，别再当成一级分类塞进来。
 const CATEGORIES = [

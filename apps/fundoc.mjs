@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { click, shoot, sleep, steps, type } from '../shared.mjs';
 
-const ROOT = '/home/bingtao/workspace/github/farfarfun-utools/utools-fundoc';
+const ROOT = path.resolve(import.meta.dirname, '../../utools-fundoc');
 
 const LINALG = `# 特征值与特征向量
 
@@ -136,8 +136,8 @@ const seedFor = ({ theme = 'light', mode = 'ir' } = {}) => `
       syncTitleFromHeading: true,
       headingNumber: true,
       autoSaveDelay: 800,
-      outlineVisible: true,
-      treeVisible: true,
+      outlineVisible: false,
+      treeVisible: false,
     },
     'fundoc.ui.expanded': ['n-study', 'n-work'],
   }));
@@ -160,7 +160,10 @@ export default async function run() {
       {
         name: 'search',
         // 「插件」同时命中一篇标题和一篇正文，正好把标题匹配、正文片段两种结果都拍进去。
-        before: steps(click('[title="搜索文档（Ctrl+Shift+P）"]'), type('.sp-input', '插件')),
+        before: steps(
+          (session) => session.evaluate('window.dispatchEvent(new KeyboardEvent("keydown", { key: "p", ctrlKey: true, shiftKey: true, bubbles: true })); true'),
+          type('.sp-input', '插件'),
+        ),
         wait: 900,
       },
       { name: 'settings', before: steps(click('.sp-mask'), click('[title="设置"]')), wait: 900 },
