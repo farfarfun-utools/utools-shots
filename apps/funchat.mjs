@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { click, clickContains, clickText, reload, rightClick, scrollToBottom, shoot, sleep, steps } from '../shared.mjs';
+import { click, clickContains, clickText, reload, resolvePluginRoot, rightClick, scrollToBottom, shoot, sleep, steps } from '../shared.mjs';
 
-const ROOT = path.resolve(import.meta.dirname, '../../utools-funchat');
+const ROOT = resolvePluginRoot('utools-funchat');
 
 // 内置好友里的 GPT-5.4（utools/dist/data/agents.json 自带，首次运行会自动入库）。
 const AGENT = 'ai@0000000000002';

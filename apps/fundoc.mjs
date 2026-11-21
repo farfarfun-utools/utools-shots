@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { click, shoot, sleep, steps, type } from '../shared.mjs';
+import { click, resolvePluginRoot, shoot, sleep, steps, type } from '../shared.mjs';
 
-const ROOT = path.resolve(import.meta.dirname, '../../utools-fundoc');
+const ROOT = resolvePluginRoot('utools-fundoc');
 
 const LINALG = `# 特征值与特征向量
 

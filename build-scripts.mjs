@@ -5,9 +5,9 @@
 // 整份骨架照抄过去会让 eslint 在每个仓库里报一串 no-unused-vars。
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolvePluginRoot } from './shared.mjs';
 
 const HERE = import.meta.dirname;
-const WORKSPACE = path.dirname(HERE);
 const APPS = ['funchat', 'fundoc', 'funlink', 'funotp'];
 
 const prelude = fs.readFileSync(path.join(HERE, '_prelude.mjs'), 'utf8');
@@ -48,12 +48,13 @@ for (const app of APPS) {
     // 裁掉整块之后会留下连续空行，收一收。
     .replace(/\n{3,}/g, '\n\n');
 
-  const target = path.join(WORKSPACE, `utools-${app}`, 'scripts/screenshots.mjs');
+  const pluginRoot = resolvePluginRoot(`utools-${app}`);
+  const target = path.join(pluginRoot, 'scripts/screenshots.mjs');
   fs.writeFileSync(target, `${body}${tail}`);
 
   // cdp.mjs 也一起分发。它原来是靠手工拷的，结果已经漂了：funchat / funlink / funotp
   // 那三份一致，fundoc 那份差一行（临时目录前缀还写着插件名）。分发比对账便宜。
-  fs.copyFileSync(path.join(HERE, 'cdp.mjs'), path.join(WORKSPACE, `utools-${app}`, 'scripts/cdp.mjs'));
+  fs.copyFileSync(path.join(HERE, 'cdp.mjs'), path.join(pluginRoot, 'scripts/cdp.mjs'));
 
   console.log(`${app.padEnd(8)} 保留小动作：${[...used].join(', ') || '（无）'}`);
 }

@@ -36,6 +36,8 @@ node build-scripts.mjs  # 生成四个仓库的 scripts/screenshots.mjs 和 scri
 node run.mjs funotp     # 本地预览某个插件的截图（需要先在该仓库里 pnpm build）
 ```
 
+插件目录自动按以下顺序解析：`UTOOLS_PLUGINS_DIR` 环境变量 → `../../plugins/utools-<app>`（`utools-dev` 聚合工作区）→ `../utools-<app>`（与本仓库平铺）。
+
 `run.mjs` 的图落在 `preview/<仓库名>/`（已 gitignore），**不会**动插件仓库里的
 `docs/screenshots` —— 那些图归 CI 管，见最后一节。真要就地覆盖（比如想看 README 渲染
 出来什么样）：`SHOTS_OUT=repo node run.mjs funotp`，看完记得 `git restore docs/screenshots`。

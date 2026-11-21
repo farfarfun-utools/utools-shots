@@ -86,7 +86,7 @@ fs.writeFileSync(
   `#!/bin/sh
 # 由 setup.mjs 生成，不要手改。
 ${runtimeLib ? `export LD_LIBRARY_PATH="${runtimeLib}\${LD_LIBRARY_PATH:+:\$LD_LIBRARY_PATH}"\n` : ''}export FONTCONFIG_FILE="${path.join(HERE, 'fonts.conf')}"
-exec ${chromium} "$@"
+exec "${chromium}" "$@"
 `,
 );
 fs.chmodSync(wrapper, 0o755);

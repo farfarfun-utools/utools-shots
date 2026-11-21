@@ -22,6 +22,32 @@ const MIME = {
   '.ico': 'image/x-icon',
 };
 
+const HERE = import.meta.dirname;
+
+/**
+ * 定位插件仓库根目录，同时兼容两种工作区布局：
+ * 1. `UTOOLS_PLUGINS_DIR` 环境变量显式指定插件父目录；
+ * 2. 聚合工作区：`utools-dev/tools/utools-shots` -> `utools-dev/plugins/<name>`；
+ * 3. 平铺工作区：`.shots` / `utools-shots` 与 `<name>` 同级。
+ */
+export function resolvePluginRoot(name) {
+  const candidates = [
+    process.env.UTOOLS_PLUGINS_DIR && path.resolve(process.env.UTOOLS_PLUGINS_DIR, name),
+    path.resolve(HERE, '../../plugins', name),
+    path.resolve(HERE, '..', name),
+  ].filter(Boolean);
+
+  for (const dir of candidates) {
+    if (fs.existsSync(path.join(dir, 'utools/plugin.json'))) return dir;
+  }
+  const found = candidates.find((dir) => fs.existsSync(dir));
+  if (found) return found;
+
+  throw new Error(
+    `找不到插件仓库 ${name}（已检查：${candidates.join(', ')}）。可通过 UTOOLS_PLUGINS_DIR 指定插件父目录。`,
+  );
+}
+
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const HIDE_SCROLLBARS = `(() => {
@@ -96,11 +122,13 @@ export const steps = (...actions) => async (session) => {
 };
 
 export async function serve(root) {
+  const resolvedRoot = path.resolve(root);
+  const rootPrefix = resolvedRoot.endsWith(path.sep) ? resolvedRoot : `${resolvedRoot}${path.sep}`;
   const server = http.createServer((request, response) => {
     const url = new URL(request.url, 'http://127.0.0.1');
     const relative = decodeURIComponent(url.pathname).replace(/^\/+/, '') || 'index.html';
-    const target = path.join(root, relative);
-    if (!target.startsWith(root) || !fs.existsSync(target) || fs.statSync(target).isDirectory()) {
+    const target = path.resolve(resolvedRoot, relative);
+    if ((target !== resolvedRoot && !target.startsWith(rootPrefix)) || !fs.existsSync(target) || fs.statSync(target).isDirectory()) {
       response.writeHead(404).end('not found');
       return;
     }

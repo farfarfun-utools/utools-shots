@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { click, reload, shoot, sleep, steps } from '../shared.mjs';
+import { click, reload, resolvePluginRoot, shoot, sleep, steps } from '../shared.mjs';
 
-const ROOT = path.resolve(import.meta.dirname, '../../utools-funotp');
+const ROOT = resolvePluginRoot('utools-funotp');
 
 const GROUPS = [
   { id: 'g-dev', name: '开发' },
